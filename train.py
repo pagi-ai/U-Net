@@ -69,7 +69,8 @@ def train(model, optimizer, loader, epoch):
 	return np.mean(train_loss)
 
 
-def random_transform(img, mask, rotate=10, zoom=0.05, shift=0.05, flip=True):
+def random_transform(img, mask, rotate=10, zoom=0.05, shift=0.05,
+						hflip=True, vflip=False):
 	h, w = img.shape[:2]
 	rotation = np.random.uniform(-rotate, rotate)
 	scale = np.random.uniform(1 - zoom, 1 + zoom)
@@ -79,10 +80,12 @@ def random_transform(img, mask, rotate=10, zoom=0.05, shift=0.05, flip=True):
 	mat[:, 2] += (tx, ty)
 	img = cv2.warpAffine(img, mat, (w, h), flags=cv2.INTER_CUBIC)
 	mask = cv2.warpAffine(mask, mat, (w, h), flags=cv2.INTER_CUBIC)
-	is_flip = flip and np.random.random() < 0.5
-	if is_flip:
+	if hflip and np.random.random() < 0.5:
 		img = cv2.flip(img, 1)
 		mask = cv2.flip(mask, 1)
+	if vflip and np.random.random() < 0.5:
+		img = cv2.flip(img, 0)
+		mask = cv2.flip(mask, 0)
 	return img, mask
 
 
