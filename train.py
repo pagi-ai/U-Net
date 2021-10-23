@@ -69,11 +69,11 @@ def train(model, optimizer, loader, epoch):
 	return np.mean(train_loss)
 
 
-def random_transform(img, mask, rotate=10, zoom=0.05, shift=0.05,
-						hflip=True, vflip=False):
-	h, w = img.shape[:2]
+def random_transform(img, mask, hflip=True, vflip=False):
+	rotate, zoom, shift = 10, 0.05, 0.05
 	rotation = np.random.uniform(-rotate, rotate)
 	scale = np.random.uniform(1 - zoom, 1 + zoom)
+	h, w = img.shape[:2]
 	tx = np.random.uniform(-shift, shift) * w
 	ty = np.random.uniform(-shift, shift) * h
 	mat = cv2.getRotationMatrix2D((w // 2, h // 2), rotation, scale)
