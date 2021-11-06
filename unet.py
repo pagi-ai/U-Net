@@ -3,10 +3,10 @@ import torch.nn as nn
 
 
 class ConvEnc(nn.Module):
-	def __init__(self, in_chan, out_chan, normalize=True, stride=2):
+	def __init__(self, in_chan, out_chan, normalize=True):
 		super(ConvEnc, self).__init__()
 
-		conv = nn.Conv2d(in_chan, out_chan, 4, stride=stride, padding=1)
+		conv = nn.Conv2d(in_chan, out_chan, 4, stride=2, padding=1)
 		nn.init.normal_(conv.weight, 0, 0.02)
 		model = [conv]
 
